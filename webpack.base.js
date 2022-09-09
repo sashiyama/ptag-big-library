@@ -11,6 +11,8 @@ const path = require('path')
 module.exports = {
     entry: {
 	home: './javascripts/home/index.tsx',
+	userNew: './javascripts/users/new.tsx',
+	userHeader: './javascripts/shared/userHeader.tsx'
     },
 
     output: {
@@ -22,7 +24,13 @@ module.exports = {
         rules: [
 	    {
 		test: /\.(ts|tsx)$/,
-		use: ['babel-loader']
+		use: ['babel-loader'],
+		exclude: /node_modules/
+	    },
+	    {
+		test: /\.(ts|tsx)$/,
+		use: ['ts-loader'],
+		exclude: /node_modules/
 	    },
         ]
     },

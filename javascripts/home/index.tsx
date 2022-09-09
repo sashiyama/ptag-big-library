@@ -1,15 +1,16 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Page } from './page'
+import { Page } from '../shared/page'
 
 const Home = () => {
-  return (
-    <Page></Page>
-  )
+  return <Page>Home</Page>
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
   const container = document.getElementById('home')
-  const root = createRoot(container)
-  root.render(<Home />);
+
+  if (container) {
+    const root = createRoot(container)
+    root.render(<Home />)
+  }
 })

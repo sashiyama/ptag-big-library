@@ -1,3 +1,4 @@
-= javascript_include_tag asset_url('home.js'), type: 'text/javascript'
+- content_for :script_include do
+  = javascript_include_tag asset_url('home.js'), type: 'text/javascript'
 
 #home

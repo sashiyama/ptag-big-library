@@ -9,7 +9,7 @@ export const Copyright = () => {
     <Typography variant="body2" color="inherit" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://github.com/sashiyama">
-        <GitHubIcon sx={{ fontSize: 16, verticalAlign: "sub" }} /> Yoshi
+        <GitHubIcon sx={{ fontSize: 16, verticalAlign: 'sub' }} /> Yoshi
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

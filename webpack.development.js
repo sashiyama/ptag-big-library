@@ -19,7 +19,7 @@ module.exports = merge(base, {
 	    overlay: true,
 	    reconnect: false,
 	},
-	watchFiles: ['javascripts/**/*.tsx']
+	watchFiles: ['javascripts/**/*.tsx', 'javascripts/**/*.ts']
     },
 
 
