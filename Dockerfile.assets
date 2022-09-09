@@ -1,0 +1,8 @@
+FROM node:16-alpine
+
+ENV ASSETS_PATH=/assets
+WORKDIR ${ASSETS_PATH}
+
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY webpack.base.js webpack.development.js webpack.production.js tsconfig.json .babelrc ./

@@ -1,0 +1,47 @@
+version: "3.8"
+services:
+  server:
+    build: .
+    entrypoint: bundle exec rails s -b 0.0.0.0 -p 3000
+    volumes:
+      - .:/ptag-library:cached
+    ports:
+      - "127.0.0.1:80:3000"
+    environment:
+      PTAG_DB_PASSWORD: $PTAG_DB_PASSWORD
+      ASSET_URL: $ASSET_URL
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+      - assets
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ptag_admin
+      POSTGRES_PASSWORD: $PTAG_DB_PASSWORD
+      POSTGRES_HOST_AUTH_METHOD: password
+    ports:
+      - "127.0.0.1:5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data:delegated
+
+  assets:
+    build:
+      context: .
+      dockerfile: Dockerfile.assets
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .:/assets:cached
+      - node-modules-data:/assets/node_modules
+    command: npm run start:dev
+    ports:
+      - "127.0.0.1:8080:8080"
+
+volumes:
+  postgresql-data:
+  node-modules-data:
