@@ -38,6 +38,7 @@ gem "bootsnap", require: false
 
 gem 'dotenv-rails'
 gem 'faraday', '~> 2.5', '>= 2.5.2'
+gem 'kaminari', '~> 0.16.3'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"

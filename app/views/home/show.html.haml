@@ -1,4 +1,24 @@
 - content_for :script_include do
   = javascript_include_tag asset_url('home.js'), type: 'text/javascript'
 
-#home
+:ruby
+  books = @books.map do |book|
+    {
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      genre: book.genre,
+      subgenre: book.subgenre,
+      pages: book.pages,
+      publisher: book.publisher
+    }
+  end
+
+  props = {
+    books: books,
+    is_logged_in: !current_user.nil?,
+    pages: @books.total_pages,
+    page: @books.current_page
+  }
+
+#home{ data: { props: props.to_json } }

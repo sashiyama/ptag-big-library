@@ -24,7 +24,6 @@ const UserHeader: React.FC<IProps> = ({
   sessions_path,
   is_logged_in,
 }) => {
-  console.log(is_logged_in)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

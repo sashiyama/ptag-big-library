@@ -114,6 +114,9 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -249,6 +252,7 @@ DEPENDENCIES
   faraday (~> 2.5, >= 2.5.2)
   haml-rails (~> 2.0)
   jbuilder
+  kaminari (~> 0.16.3)
   pg (~> 1.1)
   pry-byebug
   puma (~> 5.0)
