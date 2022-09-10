@@ -1,0 +1,34 @@
+Library App Dev Test
+
+PART 1
+You just got a your first client as a developer. They want you to build a Ruby on Rails app for their small town library system.
+
+The core functionality of the system is:
+- assume there is only library
+- the library system will have have many users
+- a user must have an account to take books out at the library, they may sign up using their email and a password
+- the library system will have many books
+- assume there are multiple copies of each book
+- a user can check out many books at once; the book must be returned 1 week after checkout date.
+- there must be a log of who checked which book out when, and when it was returned; in terms of UI, thing of this as a page where a system user can drill down on a particular copy of a book and see the full history of that book - who took it out when, who returned it, etc.
+- a user who is not logged in should be able to see the full list of books in the library, but not "check out" any books
+- only a user who is logged in can borrow a book; next to each title, there should be a button which will say "borrow" - this button is only available if all copies of the book are not currently signed out by other users.
+- the user needs to see a list of books they currently have signed out, and their due dates; to "return" a book, the user simply clicks a button next to the title of the book which will say "return"
+- there must be an administrator user who can edit the details of books, add new ones, add new copies of a book, etc.
+- the details page for each book should show the status of each copy of a particular title, including who currently has it signed out, if applicable
+- every day at midnight, users with overdue books must be emailed
+- the list of potential books is attached as a CSV file, which you will need to load in
+
+Deploy this app on Heroku; send me a link to the app, as well as a link to the source on git.
+
+PART 2
+The big city saw your work on the small town library and now they want to buy your system! You need to make a couple changes to do this:
+
+You must take the app from PART 1, clone it, and create a new app with the following changes:
+- you must now support many libraries
+- each library needs to have a branch name, address, and phone number
+- each library has it's own collection of different books, the collection for the whole library system is attached as a CSV file, which you will need to load in
+- when searching for a book, users need to know which library the book is at
+- if all copies of a book are signed out, users can put a "notification request" on a title; when a copy of the book becomes available, the user needs to be notified via email
+
+Deploy this as a separate app on Heroku; send me a link to the app, as well as a link to the source on git.
