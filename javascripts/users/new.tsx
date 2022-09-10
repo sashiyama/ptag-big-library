@@ -2,18 +2,21 @@ import * as React from 'react'
 import { createRoot } from 'react-dom/client'
 import { useForm, Controller } from 'react-hook-form'
 
+import Alert from '@mui/material/Alert'
 import Avatar from '@mui/material/Avatar'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
+import LoadingButton from '@mui/lab/LoadingButton'
 import Grid from '@mui/material/Grid'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import { Page } from '../shared/page'
 
+import { postRequest } from '../requests/fetch'
 import { csrfToken } from '@rails/ujs'
 
 type IFormState = {
@@ -22,16 +25,27 @@ type IFormState = {
   password: string
 }
 
-const New = () => {
+const New: React.FC<{
+  usersPath: string
+}> = ({ usersPath }) => {
+  const [serverErrors, setServerErrors] = React.useState<string[]>([])
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<IFormState>()
-  const onSubmit = (data: IFormState) => {
-    console.log(data)
-    console.log(csrfToken())
+  const onSubmit = async (data: IFormState) => {
+    const token = csrfToken()
+    if (token) {
+      const res = await postRequest(usersPath, token, JSON.stringify(data))
+      if (res.errors) {
+        setServerErrors(res.errors)
+      } else {
+        setServerErrors([])
+        window.location.href = res.redirect_to
+      }
+    }
   }
 
   return (
@@ -55,6 +69,9 @@ const New = () => {
           onSubmit={handleSubmit(onSubmit)}
           sx={{ mt: 1, width: '380px' }}
         >
+          {serverErrors.length > 0 && (
+            <Alert severity="error">{serverErrors.join(',')}</Alert>
+          )}
           <Controller
             name="name"
             control={control}
@@ -140,15 +157,18 @@ const New = () => {
               )
             }}
           />
-          <Button
+          <LoadingButton
             variant="contained"
             type="submit"
             fullWidth
             color="secondary"
+            disabled={isSubmitting}
+            loading={isSubmitting}
+            loadingIndicator={<CircularProgress color="secondary" size={18} />}
             sx={{ mt: 3, mb: 2 }}
           >
             SIGN UP
-          </Button>
+          </LoadingButton>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2" color="inherit">
@@ -165,8 +185,8 @@ const New = () => {
 window.addEventListener('DOMContentLoaded', (event) => {
   const container = document.getElementById('user-new')
 
-  if (container) {
+  if (container && container.dataset.usersPath) {
     const root = createRoot(container)
-    root.render(<New />)
+    root.render(<New usersPath={container.dataset.usersPath} />)
   }
 })
