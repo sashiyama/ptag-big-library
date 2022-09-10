@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root 'home#show'
   get :home, to: 'home#show', as: 'home'
 
-  resources :users
+  resources :users, only: %i[new create]
+  resource :sessions, only: %i[new create destroy]
   match '/signup', to: 'users#new', via: 'get'
 end

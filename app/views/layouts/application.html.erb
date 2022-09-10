@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <%= tag.div data: { new_user_path: new_user_path }, id: 'user-header' %>
+    <%= tag.div data: { props: { new_user_path: new_user_path, sessions_path: sessions_path, is_logged_in: !current_user.nil? }.to_json }, id: 'user-header' %>
     <%= yield %>
   </body>
 </html>

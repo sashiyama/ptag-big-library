@@ -20,18 +20,18 @@ import { postRequest } from '../requests/fetch'
 import { csrfToken } from '@rails/ujs'
 
 type IFormState = {
-  name: string
   email: string
   password: string
 }
 
 type IProps = {
-  users_path: string
-  new_session_path: string
+  sessions_path: string
+  new_user_path: string
 }
 
-const New: React.FC<IProps> = ({ users_path, new_session_path }) => {
-  const [serverErrors, setServerErrors] = React.useState<string[]>([])
+const New: React.FC<IProps> = ({ sessions_path, new_user_path }) => {
+  const [error, setError] = React.useState<string | null>(null)
+
   const {
     register,
     handleSubmit,
@@ -41,11 +41,11 @@ const New: React.FC<IProps> = ({ users_path, new_session_path }) => {
   const onSubmit = async (data: IFormState) => {
     const token = csrfToken()
     if (token) {
-      const res = await postRequest(users_path, token, JSON.stringify(data))
-      if (res.errors) {
-        setServerErrors(res.errors)
+      const res = await postRequest(sessions_path, token, JSON.stringify(data))
+      if (res.error) {
+        setError(res.error)
       } else {
-        setServerErrors([])
+        setError(null)
         window.location.href = res.redirect_to
       }
     }
@@ -65,53 +65,17 @@ const New: React.FC<IProps> = ({ users_path, new_session_path }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Login
         </Typography>
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           sx={{ mt: 1, width: '380px' }}
         >
-          {serverErrors.length > 0 && (
-            <Alert severity="error">{serverErrors.join(',')}</Alert>
-          )}
-          <Controller
-            name="name"
-            control={control}
-            rules={{
-              required: { value: true, message: 'Please enter your name' },
-              maxLength: {
-                value: 50,
-                message: 'Please enter your name within 50 charactors',
-              },
-            }}
-            defaultValue=""
-            render={({ field }) => {
-              return (
-                <TextField
-                  {...field}
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  color="secondary"
-                  autoFocus
-                  error={!!errors['name']}
-                  helperText={errors['name'] ? errors['name'].message : ''}
-                />
-              )
-            }}
-          />
+          {error && <Alert severity="error">{error}</Alert>}
           <Controller
             name="email"
             control={control}
-            rules={{
-              pattern: {
-                value: /^[\w+\-.]+@[a-z\d\-.]+\.[a-z]+$/i,
-                message: 'Please enter in the format: name@example.com',
-              },
-            }}
             defaultValue=""
             render={({ field }) => {
               return (
@@ -124,6 +88,7 @@ const New: React.FC<IProps> = ({ users_path, new_session_path }) => {
                   label="Email Address"
                   color="secondary"
                   autoComplete="email"
+                  autoFocus
                   error={!!errors['email']}
                   helperText={errors['email'] ? errors['email'].message : ''}
                 />
@@ -133,13 +98,6 @@ const New: React.FC<IProps> = ({ users_path, new_session_path }) => {
           <Controller
             name="password"
             control={control}
-            rules={{
-              minLength: {
-                value: 6,
-                message:
-                  'Please enter your password greather than 6 charactors',
-              },
-            }}
             defaultValue=""
             render={({ field }) => {
               return (
@@ -170,12 +128,12 @@ const New: React.FC<IProps> = ({ users_path, new_session_path }) => {
             loadingIndicator={<CircularProgress color="secondary" size={18} />}
             sx={{ mt: 3, mb: 2 }}
           >
-            SIGN UP
+            LOGIN
           </LoadingButton>
           <Grid container>
             <Grid item xs>
-              <Link href={new_session_path} variant="body2" color="inherit">
-                Do you have an account? Login
+              <Link href={new_user_path} variant="body2" color="inherit">
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
@@ -186,7 +144,7 @@ const New: React.FC<IProps> = ({ users_path, new_session_path }) => {
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  const container = document.getElementById('user-new')
+  const container = document.getElementById('session-new')
 
   if (container && container.dataset.props) {
     const root = createRoot(container)

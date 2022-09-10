@@ -12,6 +12,7 @@ module.exports = {
     entry: {
 	home: './javascripts/home/index.tsx',
 	userNew: './javascripts/users/new.tsx',
+	sessionNew: './javascripts/sessions/new.tsx',
 	userHeader: './javascripts/shared/userHeader.tsx'
     },
 

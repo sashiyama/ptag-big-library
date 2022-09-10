@@ -1,0 +1,4 @@
+- content_for :script_include do
+  = javascript_include_tag asset_url('sessionNew.js'), type: 'text/javascript'
+
+#session-new{ data: { props: { sessions_path: sessions_path, new_user_path: new_user_path }.to_json } }
