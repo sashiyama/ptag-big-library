@@ -10,4 +10,9 @@ Rails.application.routes.draw do
   resources :users, only: %i[new create]
   resource :sessions, only: %i[new create destroy]
   match '/signup', to: 'users#new', via: 'get'
+
+  resources :checked_out_books, only: :create
+  resources :returned_books, only: :create
+
+  resource :mypage, only: :show
 end

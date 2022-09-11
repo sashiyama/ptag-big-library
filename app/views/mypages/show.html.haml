@@ -1,5 +1,5 @@
 - content_for :script_include do
-  = javascript_include_tag asset_url('home.js'), type: 'text/javascript'
+  = javascript_include_tag asset_url('mypage.js'), type: 'text/javascript'
 
 :ruby
   books = @books.map do |book|
@@ -16,7 +16,8 @@
     }
   end
 
-  props = {
+  profile = { name: current_user.name, email: current_user.email }
+  book_props = {
     books: books,
     is_logged_in: !current_user.nil?,
     pages: @books.total_pages,
@@ -26,4 +27,6 @@
     returned_books_path: returned_books_path
   }
 
-#home{ data: { props: props.to_json } }
+  props = { profile_props: profile, book_props: book_props }
+
+#mypage{ data: { props: props.to_json } }

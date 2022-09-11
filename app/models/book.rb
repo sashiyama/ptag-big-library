@@ -36,7 +36,17 @@ class Book < ApplicationRecord
 
   has_many :checked_out_books, dependent: :destroy
 
+  scope :on_loan, -> { joins(:checked_out_books).left_joins(checked_out_books: :returned_book).where(returned_book: { id: nil }) }
+
+  def borrowed?(user)
+    checked_out_books.on_loan.where(user: user).exists?
+  end
+
+  def above_lending_limit?
+    copies <= num_of_books_on_loan
+  end
+
   def num_of_books_on_loan
-    checked_out_books.where.missing(:returned_book).count
+    checked_out_books.on_loan.count
   end
 end

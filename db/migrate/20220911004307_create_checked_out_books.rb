@@ -7,6 +7,5 @@ class CreateCheckedOutBooks < ActiveRecord::Migration[7.0]
       t.references :book, null: false, foreign_key: true, type: :uuid
       t.datetime :created_at, null: false
     end
-    add_index :checked_out_books, %i[user_id book_id], unique: true
   end
 end

@@ -9,4 +9,5 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }
 
   has_many :checked_out_books, dependent: :destroy
+  has_many :books, through: :checked_out_books
 end

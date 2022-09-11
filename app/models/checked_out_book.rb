@@ -8,5 +8,6 @@ class CheckedOutBook < ApplicationRecord
 
   validates :user, presence: true
   validates :book, presence: true
-  validates :book, uniqueness: { scope: :user }
+
+  scope :on_loan, -> { where.missing(:returned_book) }
 end

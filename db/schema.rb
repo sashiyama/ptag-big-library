@@ -31,7 +31,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_004608) do
     t.uuid "book_id", null: false
     t.datetime "created_at", null: false
     t.index ["book_id"], name: "index_checked_out_books_on_book_id"
-    t.index ["user_id", "book_id"], name: "index_checked_out_books_on_user_id_and_book_id", unique: true
     t.index ["user_id"], name: "index_checked_out_books_on_user_id"
   end
 

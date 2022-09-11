@@ -17,12 +17,16 @@ type IProps = {
   new_user_path: string
   sessions_path: string
   is_logged_in: boolean
+  name: string
+  mypage_path: string
 }
 
 const UserHeader: React.FC<IProps> = ({
   new_user_path,
   sessions_path,
   is_logged_in,
+  name,
+  mypage_path,
 }) => {
   return (
     <ThemeProvider theme={theme}>
@@ -63,15 +67,25 @@ const UserHeader: React.FC<IProps> = ({
               Sign up
             </Button>
           ) : (
-            <Button
-              href={sessions_path}
-              color="secondary"
-              variant="outlined"
-              sx={{ my: 1, mx: 1.5 }}
-              data-method="delete"
-            >
-              Logout
-            </Button>
+            <>
+              <Link
+                variant="button"
+                color="text.primary"
+                href={mypage_path}
+                sx={{ my: 1, mx: 1.5 }}
+              >
+                {name}
+              </Link>
+              <Button
+                href={sessions_path}
+                color="secondary"
+                variant="outlined"
+                sx={{ my: 1, mx: 1.5 }}
+                data-method="delete"
+              >
+                Logout
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>
