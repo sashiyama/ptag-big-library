@@ -17,6 +17,6 @@ class ReturnBookForm
   end
 
   def checked_out_book
-    @checked_out_book ||= @user.checked_out_books.find_by(book: book)
+    @checked_out_book ||= @user.checked_out_books.order(created_at: :desc).find_by(book: book)
   end
 end
