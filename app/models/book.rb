@@ -33,4 +33,10 @@ class Book < ApplicationRecord
   validates :subgenre, presence: true
   validates :pages, presence: true
   validates :copies, presence: true
+
+  has_many :checked_out_books, dependent: :destroy
+
+  def num_of_books_on_loan
+    checked_out_books.where.missing(:returned_book).count
+  end
 end
