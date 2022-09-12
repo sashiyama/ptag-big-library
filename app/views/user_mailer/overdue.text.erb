@@ -1,0 +1,14 @@
+Hi, <%= @user.name %>
+
+Thank you for using our library and borrowing some books.
+
+We would like to acknowledge you about your overdue books which you are borrowing.
+You need to return books as below until 1 week later when you borrowed.
+
+<% @user.checked_out_books.overdue.each do |checked_out_book| %>
+<% book = checked_out_book.book %>
+- Title: <%= book.title %>, Date of borrowed: <%= checked_out_book.created_at.to_formatted_s(:long) %>
+<% end %>
+
+Thank you for your understanding,
+PTAG Library β
