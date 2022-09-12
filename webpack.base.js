@@ -15,7 +15,10 @@ module.exports = {
 	userNew: './javascripts/users/new.tsx',
 	sessionNew: './javascripts/sessions/new.tsx',
 	bookShow: './javascripts/books/show.tsx',
-	userHeader: './javascripts/shared/userHeader.tsx'
+	userHeader: './javascripts/shared/userHeader.tsx',
+	adminHeader: './javascripts/admin/shared/adminHeader.tsx',
+	librarianNew: './javascripts/admin/librarians/new.tsx',
+	librarianSessionNew: './javascripts/admin/librarians/sessions/new.tsx'
     },
 
     output: {

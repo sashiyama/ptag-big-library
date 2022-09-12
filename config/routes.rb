@@ -17,4 +17,10 @@ Rails.application.routes.draw do
   resource :mypage, only: :show
 
   resources :books, only: :show
+
+  namespace :admin do
+    resources :librarians, only: %i[new create]
+    resource :sessions, only: %i[new create destroy]
+    resources :books
+  end
 end

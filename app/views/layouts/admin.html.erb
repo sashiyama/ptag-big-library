@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>(Admin) PTAG Library β</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" %>
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/icon?family=Material+Icons" %>
+    <%= javascript_include_tag asset_url('adminHeader.js'), type: 'text/javascript' %>
+    <%= yield :script_include %>
+  </head>
+
+  <body>
+    <%= tag.div data: {
+	props: {
+	new_admin_sessions_path: new_admin_sessions_path,
+	admin_sessions_path: admin_sessions_path,
+	is_logged_in: !current_librarian.nil?,
+	name: current_librarian&.name
+	}.to_json
+	}, id: 'admin-header'%>
+    <%= yield %>
+  </body>
+</html>

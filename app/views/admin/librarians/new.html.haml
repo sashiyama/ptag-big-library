@@ -1,0 +1,4 @@
+- content_for :script_include do
+  = javascript_include_tag asset_url('librarianNew.js'), type: 'text/javascript'
+
+#librarian-new{ data: { props: { admin_librarians_path: admin_librarians_path, new_admin_sessions_path: new_admin_sessions_path }.to_json } }

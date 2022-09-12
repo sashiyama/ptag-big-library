@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { theme } from './userTheme'
+import { theme } from './adminTheme'
 
 import AppBar from '@mui/material/AppBar'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -14,19 +14,17 @@ import { ThemeProvider } from '@mui/material/styles'
 import * as Rails from '@rails/ujs'
 
 type IProps = {
-  new_user_path: string
-  sessions_path: string
+  new_admin_sessions_path: string
+  admin_sessions_path: string
   is_logged_in: boolean
   name: string
-  mypage_path: string
 }
 
-const UserHeader: React.FC<IProps> = ({
-  new_user_path,
-  sessions_path,
+const AdminHeader: React.FC<IProps> = ({
+  new_admin_sessions_path,
+  admin_sessions_path,
   is_logged_in,
   name,
-  mypage_path,
 }) => {
   return (
     <ThemeProvider theme={theme}>
@@ -42,44 +40,27 @@ const UserHeader: React.FC<IProps> = ({
             color="inherit"
             noWrap
             sx={{ flexGrow: 1 }}
-            href="/"
+            href="#"
             underline="none"
           >
-            PTAG Library β
+            PTAG Library β for Librarians
           </Link>
-          <nav>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="https://github.com/sashiyama"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Support
-            </Link>
-          </nav>
           {!is_logged_in ? (
             <Button
-              href={new_user_path}
+              href={new_admin_sessions_path}
               color="secondary"
-              variant="outlined"
+              variant="contained"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Sign up
+              Login
             </Button>
           ) : (
             <>
-              <Link
-                variant="button"
-                color="text.primary"
-                href={mypage_path}
-                sx={{ my: 1, mx: 1.5 }}
-              >
-                {name}
-              </Link>
+              {name}
               <Button
-                href={sessions_path}
+                href={admin_sessions_path}
                 color="secondary"
-                variant="outlined"
+                variant="contained"
                 sx={{ my: 1, mx: 1.5 }}
                 data-method="delete"
               >
@@ -94,13 +75,13 @@ const UserHeader: React.FC<IProps> = ({
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  const container = document.getElementById('user-header')
+  const container = document.getElementById('admin-header')
 
   if (container && container.dataset.props) {
     Rails.start()
 
     const root = createRoot(container)
     const props = JSON.parse(container.dataset.props)
-    root.render(<UserHeader {...props} />)
+    root.render(<AdminHeader {...props} />)
   }
 })

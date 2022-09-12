@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_11_004608) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_12_084432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_004608) do
     t.datetime "created_at", null: false
     t.index ["book_id"], name: "index_checked_out_books_on_book_id"
     t.index ["user_id"], name: "index_checked_out_books_on_user_id"
+  end
+
+  create_table "librarians", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_librarians_on_email", unique: true
   end
 
   create_table "returned_books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

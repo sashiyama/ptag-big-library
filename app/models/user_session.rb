@@ -7,7 +7,7 @@ class UserSession
   end
 
   def current_user
-    @current_user ||= (user if user&.authenticate(@password))
+    @current_user ||= user if user&.authenticate(@password)
   end
 
   private

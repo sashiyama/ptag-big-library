@@ -2,23 +2,29 @@ import * as React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { Page } from '../shared/page'
-import { SignUpForm } from '../shared/signUpForm'
+import { SignUpForm } from '../../shared/signUpForm'
 
 type IProps = {
-  users_path: string
-  new_session_path: string
+  admin_librarians_path: string
+  new_admin_sessions_path: string
 }
 
-const New: React.FC<IProps> = ({ users_path, new_session_path }) => {
+const New: React.FC<IProps> = ({
+  admin_librarians_path,
+  new_admin_sessions_path,
+}) => {
   return (
     <Page>
-      <SignUpForm postPath={users_path} loginPath={new_session_path} />
+      <SignUpForm
+        postPath={admin_librarians_path}
+        loginPath={new_admin_sessions_path}
+      />
     </Page>
   )
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  const container = document.getElementById('user-new')
+  const container = document.getElementById('librarian-new')
 
   if (container && container.dataset.props) {
     const root = createRoot(container)
