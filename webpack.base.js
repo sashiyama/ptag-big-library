@@ -14,6 +14,7 @@ module.exports = {
 	mypage: './javascripts/mypage/index.tsx',
 	userNew: './javascripts/users/new.tsx',
 	sessionNew: './javascripts/sessions/new.tsx',
+	bookShow: './javascripts/books/show.tsx',
 	userHeader: './javascripts/shared/userHeader.tsx'
     },
 

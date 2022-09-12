@@ -1,0 +1,33 @@
+- content_for :script_include do
+  = javascript_include_tag asset_url('bookShow.js'), type: 'text/javascript'
+
+:ruby
+  history = @checked_out_books.map do |checked_out_book|
+    {
+      id: checked_out_book.id,
+      checked_out_at: checked_out_book.created_at.to_formatted_s(:long),
+      retured_at: checked_out_book.returned_book&.created_at&.to_formatted_s(:long),
+      username: checked_out_book.user.name
+    }
+  end
+
+  book = {
+    id: @book.id,
+    title: @book.title,
+    author: @book.author,
+    genre: @book.genre,
+    subgenre: @book.subgenre,
+    pages: @book.pages,
+    publisher: @book.publisher,
+    history: history,
+    copies: @book.copies,
+    num_of_books_on_loan: @book.num_of_books_on_loan
+  }
+
+  props = {
+    book: book,
+    pages: @checked_out_books.total_pages,
+    page: @checked_out_books.current_page
+  }
+
+#book-show{ data: { props: props.to_json } }

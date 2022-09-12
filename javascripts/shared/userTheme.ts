@@ -1,6 +1,18 @@
 import { createTheme } from '@mui/material/styles'
 
+import type {} from '@mui/x-data-grid/themeAugmentation'
+
 export const theme = createTheme({
+  components: {
+    // Use `MuiDataGrid` on DataGrid, DataGridPro and DataGridPremium
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#07131f',
+        },
+      },
+    },
+  },
   palette: {
     action: {
       disabled: '#ffffff42',

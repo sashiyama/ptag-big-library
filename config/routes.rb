@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   resources :returned_books, only: :create
 
   resource :mypage, only: :show
+
+  resources :books, only: :show
 end

@@ -6,6 +6,7 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import Pagination from '@mui/material/Pagination'
 
@@ -58,8 +59,10 @@ export const Index: React.FC<IProps> = ({
   const { borrow, errors: borrowErrors } = useBorrow(checked_out_books_path)
   const { giveBack, errors: returnErrors } = useReturn(returned_books_path)
 
-  console.error(borrowErrors)
-  console.error(returnErrors)
+  if (borrowErrors.length > 0 || returnErrors.length > 0) {
+    console.error(borrowErrors)
+    console.error(returnErrors)
+  }
 
   return (
     <Container maxWidth="md" sx={{ marginTop: 4 }}>
@@ -79,7 +82,7 @@ export const Index: React.FC<IProps> = ({
                   color="text.secondary"
                   gutterBottom
                 >
-                  {book.genre} - {book.subgenre}
+                  {book.genre} &gt; {book.subgenre}
                 </Typography>
                 <Typography variant="h5" component="div">
                   {book.title}
@@ -105,9 +108,11 @@ export const Index: React.FC<IProps> = ({
                 >
                   {ButtonLabel(book)}
                 </Button>
-                <Button size="small" color="secondary">
-                  Learn More
-                </Button>
+                <Link href={`/books/${book.id}`} sx={{ marginLeft: 1 }}>
+                  <Button size="small" color="secondary">
+                    Learn More
+                  </Button>
+                </Link>
               </CardActions>
             </Card>
           </Grid>
