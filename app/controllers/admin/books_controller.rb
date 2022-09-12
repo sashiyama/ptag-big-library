@@ -2,7 +2,9 @@
 
 module Admin
   class BooksController < Admin::BaseController
-    def index; end
+    def index
+      @books = Book.order(updated_at: :desc).page(params[:page]).per(50)
+    end
 
     def new; end
 

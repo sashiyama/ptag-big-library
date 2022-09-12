@@ -16,6 +16,7 @@ import * as Rails from '@rails/ujs'
 type IProps = {
   new_admin_sessions_path: string
   admin_sessions_path: string
+  admin_books_path: string
   is_logged_in: boolean
   name: string
 }
@@ -23,6 +24,7 @@ type IProps = {
 const AdminHeader: React.FC<IProps> = ({
   new_admin_sessions_path,
   admin_sessions_path,
+  admin_books_path,
   is_logged_in,
   name,
 }) => {
@@ -40,7 +42,7 @@ const AdminHeader: React.FC<IProps> = ({
             color="inherit"
             noWrap
             sx={{ flexGrow: 1 }}
-            href="#"
+            href={admin_books_path}
             underline="none"
           >
             PTAG Library β for Librarians

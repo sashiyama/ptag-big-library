@@ -1,0 +1,27 @@
+- content_for :script_include do
+  = javascript_include_tag asset_url('librarianBookIndex.js'), type: 'text/javascript'
+
+:ruby
+  books = @books.map do |book|
+    {
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      genre: book.genre,
+      subgenre: book.subgenre,
+      pages: book.pages,
+      publisher: book.publisher,
+      copies: book.copies,
+      edit_admin_book_path: edit_admin_book_path(book)
+    }
+  end
+
+  props = {
+    books: books,
+    total_pages: @books.total_pages,
+    current_page: @books.current_page,
+    new_admin_book_path: new_admin_book_path
+  }
+
+
+#librarian-book-index{ data: { props: props.to_json } }
