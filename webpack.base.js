@@ -19,9 +19,9 @@ module.exports = {
 	adminHeader: './javascripts/admin/shared/adminHeader.tsx',
 	librarianNew: './javascripts/admin/librarians/new.tsx',
 	librarianSessionNew: './javascripts/admin/librarians/sessions/new.tsx',
-	librarianBookIndex: './javascripts/admin/librarians/books/index.tsx'
-	// librarianBookNew: './javascripts/admin/librarians/books/new.tsx',
-	// librarianBookEdit: './javascripts/admin/librarians/books/edit.tsx'
+	librarianBookIndex: './javascripts/admin/librarians/books/index.tsx',
+	librarianBookNew: './javascripts/admin/librarians/books/new.tsx',
+	librarianBookEdit: './javascripts/admin/librarians/books/edit.tsx'
     },
 
     output: {

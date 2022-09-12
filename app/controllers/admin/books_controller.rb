@@ -8,12 +8,40 @@ module Admin
 
     def new; end
 
-    def create; end
+    def create
+      book = Book.new(book_params)
 
-    def edit; end
+      if book.save
+        render json: { redirect_to: admin_books_path }, status: :created
+      else
+        render json: { errors: book.errors.full_messages }, status: :bad_request
+      end
+    end
 
-    def update; end
+    def edit
+      @book = Book.find(params[:id])
+    end
 
-    def destroy; end
+    def update
+      book = Book.find(params[:id])
+
+      if book.update(book_params)
+        render json: { redirect_to: admin_books_path }, status: :ok
+      else
+        render json: { errors: book.errors.full_messages }, status: :bad_request
+      end
+    end
+
+    def destroy
+      book = Book.find(params[:id])
+      book.destroy
+      render json: { redirect_to: admin_books_path }, status: :ok
+    end
+
+    private
+
+    def book_params
+      params.permit(:title, :author, :genre, :subgenre, :pages, :publisher, :copies)
+    end
   end
 end
