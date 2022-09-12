@@ -2,7 +2,13 @@ import { useState } from 'react'
 import { postRequest } from '../../requests/fetch'
 import { csrfToken } from '@rails/ujs'
 
-export const useReturn = (url: string) => {
+import { IBook } from '../index'
+
+export const useReturn = (
+  url: string,
+  booksState: IBook[],
+  setBooksState: (books: IBook[]) => void
+) => {
   const [errors, setErrors] = useState<string[]>([])
 
   const giveBack = async (bookId: string) => {
@@ -18,7 +24,16 @@ export const useReturn = (url: string) => {
         setErrors(res.errors)
       } else {
         setErrors([])
-        window.location.href = res.redirect_to
+        const newBooks = booksState.map((book) => {
+          if (book.id === bookId) {
+            const newBook = { ...book }
+            newBook.is_borrowed_by_me = false
+            return newBook
+          } else {
+            return book
+          }
+        })
+        setBooksState(newBooks)
       }
     }
   }
