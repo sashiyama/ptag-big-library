@@ -2,6 +2,7 @@
 
 class MypagesController < BaseController
   def show
-    @books = current_user.books.on_loan.page(params[:page]).per(15)
+    form = BookSearchForm.new(current_user.books.on_loan, params[:keyword])
+    @books = form.result.page(params[:page]).per(15)
   end
 end

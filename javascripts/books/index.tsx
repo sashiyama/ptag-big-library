@@ -11,6 +11,8 @@ import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import Pagination from '@mui/material/Pagination'
 
+import { SearchBox } from './searchBox'
+
 import { useBorrow } from './hooks/useBorrow'
 import { useReturn } from './hooks/useReturn'
 
@@ -61,6 +63,7 @@ export const Index: React.FC<IProps> = ({
 
   return (
     <Container maxWidth="md" sx={{ marginTop: 4 }}>
+      <SearchBox />
       <Typography component="h3" variant="h5">
         {title} ({total_count})
       </Typography>

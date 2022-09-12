@@ -6,7 +6,7 @@ import { Index as BookIndex, IProps as IBookProps } from '../books/index'
 const Home: React.FC<IBookProps> = (props) => {
   return (
     <Page>
-      <BookIndex {...{ ...{ title: 'All Books' }, ...props }} />
+      <BookIndex {...{ ...{ title: 'Books' }, ...props }} />
     </Page>
   )
 }
