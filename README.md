@@ -1,6 +1,6 @@
 # PTAG Library β
 
-<img width="1440" alt="Home" src="https://user-images.githubusercontent.com/19942498/189761611-81cfcd06-6f01-4c33-a0e7-eaa03449003f.png">
+<img width="1440" alt="Home" src="https://user-images.githubusercontent.com/19942498/189998937-18460429-21c9-4665-ab74-f62c2d8124ac.png">
 
 <img width="1440" alt="Mypage" src="https://user-images.githubusercontent.com/19942498/189761659-0700b827-4e61-429f-afb2-3a08b53d3702.png">
 
