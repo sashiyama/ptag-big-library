@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Manifest
-  MANIFEST_URL = 'http://assets:8080'
+  MANIFEST_URL = ENV['MANIFEST_URL'] || 'http://assets:8080'
   MANIFEST_FILE = 'manifest.json'
   private_constant :MANIFEST_URL, :MANIFEST_FILE
 

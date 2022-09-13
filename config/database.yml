@@ -84,6 +84,7 @@ test:
 #
 production:
   <<: *default
-  database: ptag_library_production
-  username: ptag_library
+  database: <%= ENV["PTAG_LIBRARY_DATABASE"] %>
+  username: <%= ENV["PTAG_LIBRARY_DATABASE_USERNAME"] %>
   password: <%= ENV["PTAG_LIBRARY_DATABASE_PASSWORD"] %>
+  host: <%= ENV["PTAG_LIBRARY_DATABASE_HOST"] %>
