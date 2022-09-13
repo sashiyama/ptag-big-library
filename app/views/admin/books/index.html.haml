@@ -12,6 +12,8 @@
       pages: book.pages,
       publisher: book.publisher,
       copies: book.copies,
+      library_id: book.library_book_relation.library.id,
+      library_name: book.library_book_relation.library.branch_name,
       edit_admin_book_path: edit_admin_book_path(book)
     }
   end

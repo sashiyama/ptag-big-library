@@ -56,6 +56,7 @@ export const BookTable: React.FC<IProps> = ({
         <TableHead>
           <TableRow hover={true} selected={true}>
             <TableCell>ID</TableCell>
+            <TableCell>Library</TableCell>
             <TableCell>Title</TableCell>
             <TableCell>Author</TableCell>
             <TableCell>Genre</TableCell>
@@ -70,6 +71,7 @@ export const BookTable: React.FC<IProps> = ({
           {books.map((book) => (
             <TableRow key={book.id}>
               <TableCell>{book.id}</TableCell>
+              <TableCell>{book.library_name}</TableCell>
               <TableCell>{book.title}</TableCell>
               <TableCell>{book.author || 'unknown'}</TableCell>
               <TableCell>{book.genre}</TableCell>

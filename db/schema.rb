@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_12_211935) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_13_094959) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_211935) do
     t.index ["email"], name: "index_librarians_on_email", unique: true
   end
 
+  create_table "libraries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "branch_name", null: false
+    t.string "address", null: false
+    t.string "phone_number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_name"], name: "index_libraries_on_branch_name"
+  end
+
+  create_table "library_book_relations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "library_id", null: false
+    t.uuid "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_library_book_relations_on_book_id"
+    t.index ["library_id", "book_id"], name: "index_library_book_relations_on_library_id_and_book_id", unique: true
+    t.index ["library_id"], name: "index_library_book_relations_on_library_id"
+  end
+
   create_table "returned_books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "checked_out_book_id", null: false
     t.datetime "created_at", null: false
@@ -64,5 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_211935) do
 
   add_foreign_key "checked_out_books", "books"
   add_foreign_key "checked_out_books", "users"
+  add_foreign_key "library_book_relations", "books"
+  add_foreign_key "library_book_relations", "libraries"
   add_foreign_key "returned_books", "checked_out_books"
 end

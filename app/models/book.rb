@@ -36,6 +36,9 @@ class Book < ApplicationRecord
 
   has_many :checked_out_books, dependent: :destroy
 
+  has_one :library_book_relation
+  has_one :library, through: :library_book_relation
+
   scope :on_loan, -> { joins(:checked_out_books).left_joins(checked_out_books: :returned_book).where(returned_book: { id: nil }).distinct }
 
   def borrowed?(user)

@@ -9,13 +9,17 @@ module Admin
     def new; end
 
     def create
-      book = Book.new(book_params)
-
-      if book.save
-        render json: { redirect_to: admin_books_path }, status: :created
-      else
-        render json: { errors: book.errors.full_messages }, status: :bad_request
-      end
+      form = Admin::BookCreateForm.new(book_params)
+      form.create!
+      render json: { redirect_to: admin_books_path }, status: :created
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { errors: [e.message] }, status: :bad_request
+    rescue ArgumentError => e
+      render json: { errors: [e.message] }, status: :bad_request
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { errors: e.record.errors.full_messages }, status: :bad_request
+    rescue ActiveModel::ValidationError => e
+      render json: { errors: e.model.errors.full_messages }, status: :bad_request
     end
 
     def edit
@@ -23,25 +27,23 @@ module Admin
     end
 
     def update
-      book = Book.find(params[:id])
-
-      if book.update(book_params)
-        render json: { redirect_to: admin_books_path }, status: :ok
-      else
-        render json: { errors: book.errors.full_messages }, status: :bad_request
-      end
-    end
-
-    def destroy
-      book = Book.find(params[:id])
-      book.destroy
+      form = Admin::BookUpdateForm.new(book_params.merge(book_id: params[:id]))
+      form.update!
       render json: { redirect_to: admin_books_path }, status: :ok
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { errors: [e.message] }, status: :bad_request
+    rescue ArgumentError => e
+      render json: { errors: [e.message] }, status: :bad_request
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { errors: e.record.errors.full_messages }, status: :bad_request
+    rescue ActiveModel::ValidationError => e
+      render json: { errors: e.model.errors.full_messages }, status: :bad_request
     end
 
     private
 
     def book_params
-      params.permit(:title, :author, :genre, :subgenre, :pages, :publisher, :copies)
+      params.permit(:library_id, :title, :author, :genre, :subgenre, :pages, :publisher, :copies)
     end
   end
 end

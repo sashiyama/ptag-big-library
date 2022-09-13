@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography'
 import { Page } from '../../shared/page'
 import { Form, IFormState } from './form'
 
+import { ILibrary } from './types/library'
+
 import { postRequest } from '../../../requests/fetch'
 import { csrfToken } from '@rails/ujs'
 
@@ -15,9 +17,15 @@ type IProps = {
   admin_books_path: string
   genres: string[]
   subgenres: string[]
+  libraries: ILibrary[]
 }
 
-const New: React.FC<IProps> = ({ admin_books_path, genres, subgenres }) => {
+const New: React.FC<IProps> = ({
+  admin_books_path,
+  genres,
+  subgenres,
+  libraries,
+}) => {
   const onSubmit = async (
     data: IFormState,
     failure: (res: { errors: string[] }) => void,
@@ -54,6 +62,7 @@ const New: React.FC<IProps> = ({ admin_books_path, genres, subgenres }) => {
         }
         genres={genres}
         subgenres={subgenres}
+        libraries={libraries}
         onSubmit={onSubmit}
         submitButtonLabel="Add"
       />

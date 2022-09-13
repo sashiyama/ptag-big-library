@@ -2,10 +2,15 @@
   = javascript_include_tag asset_url('librarianBookEdit.js'), type: 'text/javascript'
 
 :ruby
+  libraries = Library.all.map do |library|
+    { id: library.id, name: library.branch_name }
+  end
+
   props = {
     admin_book_path: admin_book_path(@book),
     genres: Book.genres.keys,
     subgenres: Book.subgenres.keys,
+    libraries: libraries,
     book: {
       title: @book.title,
       author: @book.author,
@@ -13,7 +18,8 @@
       subgenre: @book.subgenre,
       pages: @book.pages,
       publisher: @book.publisher,
-      copies: @book.copies
+      copies: @book.copies,
+      library_id: @book.library_book_relation.library.id
     }
   }
 

@@ -17,11 +17,13 @@ import Select from '@mui/material/Select'
 import OutlinedInput from '@mui/material/OutlinedInput'
 
 import { IBook } from './index'
+import { ILibrary } from './types/library'
 
 type IProps = {
   pageTitle: JSX.Element
   genres: string[]
   subgenres: string[]
+  libraries: ILibrary[]
   onSubmit: (
     data: IFormState,
     failure: (res: { errors: string[] }) => void,
@@ -31,12 +33,16 @@ type IProps = {
   defaultBook?: IFormState
 }
 
-export type IFormState = Omit<IBook, 'id' | 'edit_admin_book_path'>
+export type IFormState = Omit<
+  IBook,
+  'id' | 'edit_admin_book_path' | 'library_name'
+>
 
 export const Form: React.FC<IProps> = ({
   pageTitle,
   genres,
   subgenres,
+  libraries,
   onSubmit,
   submitButtonLabel,
   defaultBook,
@@ -44,6 +50,7 @@ export const Form: React.FC<IProps> = ({
   const [serverErrors, setServerErrors] = React.useState<string[]>([])
   const [genreNotch, setGenreNotch] = React.useState<boolean>(false)
   const [subgenreNotch, setSubgenreNotch] = React.useState<boolean>(false)
+  const [libraryNotch, setLibraryNotch] = React.useState<boolean>(false)
 
   const {
     register,
@@ -281,6 +288,50 @@ export const Form: React.FC<IProps> = ({
                 error={!!errors['copies']}
                 helperText={errors['copies'] ? errors['copies'].message : ''}
               />
+            )
+          }}
+        />
+        <Controller
+          name="library_id"
+          control={control}
+          defaultValue={defaultBook ? defaultBook.library_id : ''}
+          rules={{
+            required: { value: true, message: 'Please select a library' },
+          }}
+          render={({ field }) => {
+            return (
+              <FormControl
+                sx={{ mt: 2, mb: 1, minWidth: '100%' }}
+                error={!!errors['library_id']}
+                color="secondary"
+                required
+              >
+                <InputLabel>Library</InputLabel>
+                <Select
+                  {...field}
+                  required
+                  input={
+                    <OutlinedInput label="Library" notched={libraryNotch} />
+                  }
+                  onOpen={() => {
+                    setLibraryNotch(true)
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {libraries.map((library) => (
+                    <MenuItem key={`library-${library.id}`} value={library.id}>
+                      {library.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors['library_id'] && (
+                  <FormHelperText>
+                    {errors['library_id'].message}
+                  </FormHelperText>
+                )}
+              </FormControl>
             )
           }}
         />

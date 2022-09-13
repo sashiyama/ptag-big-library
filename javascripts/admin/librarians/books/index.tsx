@@ -16,6 +16,8 @@ export type IBook = {
   pages: number
   publisher: string | null
   copies: string
+  library_id: string
+  library_name: string
   edit_admin_book_path: string
 }
 

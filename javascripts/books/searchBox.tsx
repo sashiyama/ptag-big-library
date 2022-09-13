@@ -22,11 +22,16 @@ export const SearchBox = () => {
     >
       <InputBase
         sx={{ ml: 1, flex: 1 }}
-        placeholder="Search books by title, author, genre, and sub genre"
+        placeholder="Search books by a branch name, title, author, genre, and sub genre"
         inputProps={{ 'aria-label': 'search book' }}
         autoFocus
         onChange={(e) => {
           setKeyword(e.target.value)
+        }}
+        onKeyDown={(e) => {
+          if (e.keyCode == 13) {
+            e.preventDefault()
+          }
         }}
       />
       <IconButton

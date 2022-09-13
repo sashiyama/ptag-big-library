@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BookImporter do
+RSpec.describe Oneshots::BookImporter do
   describe '#import!' do
     let(:importer) { described_class.new(Rails.root.join('doc', 'books1.csv')) }
 

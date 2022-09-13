@@ -2,10 +2,15 @@
   = javascript_include_tag asset_url('librarianBookNew.js'), type: 'text/javascript'
 
 :ruby
+  libraries = Library.all.map do |library|
+    { id: library.id, name: library.branch_name }
+  end
+
   props = {
     admin_books_path: admin_books_path,
     genres: Book.genres.keys,
-    subgenres: Book.subgenres.keys
+    subgenres: Book.subgenres.keys,
+    libraries: libraries
   }
 
 #librarian-book-new{ data: { props: props.to_json } }

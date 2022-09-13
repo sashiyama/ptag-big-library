@@ -11,6 +11,7 @@
       subgenre: book.subgenre,
       pages: book.pages,
       publisher: book.publisher,
+      library_name: book.library.branch_name,
       is_borrowed_by_others: book.above_lending_limit?,
       is_borrowed_by_me: book.borrowed?(current_user)
     }

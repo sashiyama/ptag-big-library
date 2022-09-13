@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 
 import { Page } from '../../shared/page'
 import { Form, IFormState } from './form'
+import { ILibrary } from './types/library'
 
 import { putRequest } from '../../../requests/fetch'
 import { csrfToken } from '@rails/ujs'
@@ -15,6 +16,7 @@ type IProps = {
   admin_book_path: string
   genres: string[]
   subgenres: string[]
+  libraries: ILibrary[]
   book: IFormState
 }
 
@@ -22,6 +24,7 @@ const Edit: React.FC<IProps> = ({
   admin_book_path,
   genres,
   subgenres,
+  libraries,
   book,
 }) => {
   const onSubmit = async (
@@ -55,6 +58,7 @@ const Edit: React.FC<IProps> = ({
         }
         genres={genres}
         subgenres={subgenres}
+        libraries={libraries}
         onSubmit={onSubmit}
         submitButtonLabel="Update"
         defaultBook={book}

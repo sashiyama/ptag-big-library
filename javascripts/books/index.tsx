@@ -35,6 +35,7 @@ export type IBook = {
   subgenre: string
   pages: number
   publisher: string | null
+  library_name: string
   is_borrowed_by_others: boolean
   is_borrowed_by_me: boolean
 }
@@ -160,6 +161,9 @@ const BookCard: React.FC<{
             {book.author || 'unknown'} - {book.publisher || 'unknown'}
           </Typography>
           <Typography variant="body2">pages: {book.pages}</Typography>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            {book.library_name}
+          </Typography>
         </CardContent>
         <CardActions>
           <Button
