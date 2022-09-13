@@ -28,6 +28,8 @@ module Oneshots
 
     def delete_all
       LibraryBookRelation.delete_all
+      ReturnedBook.delete_all
+      CheckedOutBook.delete_all
       Library.delete_all
       Book.delete_all
     end

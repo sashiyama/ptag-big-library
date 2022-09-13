@@ -10,4 +10,5 @@ class User < ApplicationRecord
 
   has_many :checked_out_books, dependent: :destroy
   has_many :books, through: :checked_out_books
+  has_many :book_available_notification_requests, dependent: :destroy
 end

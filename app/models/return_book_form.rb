@@ -8,6 +8,8 @@ class ReturnBookForm
 
   def return!
     checked_out_book.create_returned_book!
+
+    notify_book_availability!
   end
 
   private
@@ -18,5 +20,12 @@ class ReturnBookForm
 
   def checked_out_book
     @checked_out_book ||= @user.checked_out_books.order(created_at: :desc).find_by(book: book)
+  end
+
+  def notify_book_availability!
+    book.book_available_notification_requests.each do |request|
+      UserMailer.book_available(request).deliver_now
+    end
+    book.book_available_notification_requests.delete_all
   end
 end

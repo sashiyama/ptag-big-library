@@ -28,6 +28,7 @@ export const useReturn = (
           if (book.id === bookId) {
             const newBook = { ...book }
             newBook.is_borrowed_by_me = false
+            newBook.is_borrowed_by_others = false
             return newBook
           } else {
             return book

@@ -35,6 +35,7 @@ class Book < ApplicationRecord
   validates :copies, presence: true
 
   has_many :checked_out_books, dependent: :destroy
+  has_many :book_available_notification_requests, dependent: :destroy
 
   has_one :library_book_relation
   has_one :library, through: :library_book_relation
@@ -43,6 +44,10 @@ class Book < ApplicationRecord
 
   def borrowed?(user)
     checked_out_books.on_loan.where(user: user).exists?
+  end
+
+  def subscribed?(user)
+    book_available_notification_requests.where(user: user).exists?
   end
 
   def above_lending_limit?

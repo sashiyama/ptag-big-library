@@ -13,7 +13,9 @@
       publisher: book.publisher,
       library_name: book.library.branch_name,
       is_borrowed_by_others: book.above_lending_limit?,
-      is_borrowed_by_me: book.borrowed?(current_user)
+      is_borrowed_by_me: book.borrowed?(current_user),
+      is_subscribed_by_me: book.subscribed?(current_user),
+      notification_request_id: current_user.book_available_notification_requests.find_by(book: book)&.id
     }
   end
 
@@ -25,7 +27,8 @@
     page: @books.current_page,
     total_count: @books.total_count,
     checked_out_books_path: checked_out_books_path,
-    returned_books_path: returned_books_path
+    returned_books_path: returned_books_path,
+    book_available_notification_requests_path: book_available_notification_requests_path
   }
 
   props = { profile_props: profile, book_props: book_props }

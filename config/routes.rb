@@ -13,10 +13,10 @@ Rails.application.routes.draw do
 
   resources :checked_out_books, only: :create
   resources :returned_books, only: :create
+  resources :books, only: :show
+  resources :book_available_notification_requests, only: %i[create destroy]
 
   resource :mypage, only: :show
-
-  resources :books, only: :show
 
   namespace :admin do
     resources :librarians, only: %i[new create]

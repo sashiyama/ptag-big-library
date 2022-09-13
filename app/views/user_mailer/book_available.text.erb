@@ -1,0 +1,9 @@
+Hi, <%= @request.user.name %>
+
+Thank you for using our library.
+
+<%= @request.book.title %> is available now.
+URL: <%= "#{home_url}?keyword=#{ERB::Util.url_encode(@request.book.title)}" %>
+
+Thanks,
+PTAG Library β

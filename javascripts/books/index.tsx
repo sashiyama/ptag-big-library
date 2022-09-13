@@ -10,11 +10,15 @@ import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import Pagination from '@mui/material/Pagination'
+import IconButton from '@mui/material/IconButton'
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive'
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 
 import { SearchBox } from './searchBox'
 
 import { useBorrow } from './hooks/useBorrow'
 import { useReturn } from './hooks/useReturn'
+import { useNotificationRequest } from './hooks/useNotificationRequest'
 
 export type IProps = {
   title: string
@@ -25,6 +29,7 @@ export type IProps = {
   total_count: number
   checked_out_books_path: string
   returned_books_path: string
+  book_available_notification_requests_path: string
 }
 
 export type IBook = {
@@ -38,6 +43,8 @@ export type IBook = {
   library_name: string
   is_borrowed_by_others: boolean
   is_borrowed_by_me: boolean
+  is_subscribed_by_me: boolean
+  notification_request_id: string | null
 }
 
 const ButtonLabel = (book: IBook) => {
@@ -59,6 +66,7 @@ export const Index: React.FC<IProps> = ({
   total_count,
   checked_out_books_path,
   returned_books_path,
+  book_available_notification_requests_path,
 }) => {
   const [booksState, setBooksState] = React.useState<IBook[]>(books)
 
@@ -75,6 +83,9 @@ export const Index: React.FC<IProps> = ({
             book={book}
             checked_out_books_path={checked_out_books_path}
             returned_books_path={returned_books_path}
+            book_available_notification_requests_path={
+              book_available_notification_requests_path
+            }
             is_logged_in={is_logged_in}
             booksState={booksState}
             setBooksState={setBooksState}
@@ -100,6 +111,7 @@ const BookCard: React.FC<{
   book: IBook
   checked_out_books_path: string
   returned_books_path: string
+  book_available_notification_requests_path: string
   is_logged_in: boolean
   booksState: IBook[]
   setBooksState: (books: IBook[]) => void
@@ -107,6 +119,7 @@ const BookCard: React.FC<{
   book,
   checked_out_books_path,
   returned_books_path,
+  book_available_notification_requests_path,
   is_logged_in,
   booksState,
   setBooksState,
@@ -141,10 +154,24 @@ const BookCard: React.FC<{
     booksState,
     setBooksState
   )
+  const {
+    subscribe,
+    unsubscribe,
+    errors: notificationRequestError,
+  } = useNotificationRequest(
+    book_available_notification_requests_path,
+    booksState,
+    setBooksState
+  )
 
-  if (borrowErrors.length > 0 || returnErrors.length > 0) {
+  if (
+    borrowErrors.length > 0 ||
+    returnErrors.length > 0 ||
+    notificationRequestError.length > 0
+  ) {
     console.error(borrowErrors)
     console.error(returnErrors)
+    console.error(notificationRequestError)
   }
 
   return (
@@ -197,6 +224,29 @@ const BookCard: React.FC<{
               Learn More
             </Button>
           </Link>
+          <IconButton
+            size="small"
+            type="button"
+            color={book.is_subscribed_by_me ? 'warning' : 'secondary'}
+            disabled={
+              !is_logged_in ||
+              !book.is_borrowed_by_others ||
+              book.is_borrowed_by_me
+            }
+            onClick={() => {
+              if (book.is_subscribed_by_me) {
+                unsubscribe(book.id, book.notification_request_id!)
+              } else {
+                subscribe(book.id)
+              }
+            }}
+          >
+            {book.is_subscribed_by_me ? (
+              <NotificationsActiveIcon />
+            ) : (
+              <NotificationsNoneIcon />
+            )}
+          </IconButton>
         </CardActions>
       </Card>
     </Grid>
